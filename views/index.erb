@@ -1,0 +1,41 @@
+<h1>To Do</h1>
+
+<p>Here are all your tasks:</p>
+
+<ul>
+  <% @tasks.not_done().each do |task| %>
+    <li><%= task.description %></li>
+  <% end %>
+</ul>
+
+<% @tasks.each() do |task| %>
+  <li><%= task.description %> <a href="/tasks/<%= task.id() %>">Update this task's description</a></li>
+<% end %>
+
+
+<p>Create a new list:</p>
+
+<form action="/lists" method="post">
+  <label for="name">Assign a name to your list:</label>
+  <input id="name" name="name" type="text">
+
+  <button type="submit">Add list</button>
+</form>
+<p> Add tasks to any list:</p>
+
+<form action="/tasks" method="post">
+  <label for="list_id">Select a List</label>
+  <select id='list_id' name='list_id' type='text'>
+    <% @lists.each() do |list| %>
+      <option value="<%= list.id() %>"> <%= list.name() %> </option>
+    <% end %>
+  </select>
+  <% @lists.each() do |list| %>
+    <input type="hidden" name="list_id" value="<%=list.id()%>">
+  <% end %>
+
+  <label for="description">Description of the task:</label>
+  <input id="description" name="description" type="text">
+
+  <button type="submit">Add task</button>
+</form>
